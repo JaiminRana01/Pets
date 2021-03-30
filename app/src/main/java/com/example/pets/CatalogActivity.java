@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -128,6 +129,8 @@ public class CatalogActivity extends AppCompatActivity {
     }
 
     private void insertPet() {
+        // Create a ContentValues object where column names are the keys,
+        // and Toto's pet attributes are the values.
         ContentValues values = new ContentValues();
         values.put(PetEntry.COLUMN_PET_NAME, "Toto");
         values.put(PetEntry.COLUMN_PET_BREED, "Terrier");
@@ -136,7 +139,7 @@ public class CatalogActivity extends AppCompatActivity {
 
         //Perform a query on the provider using content resolver.
         //use the {@link PetEntry#CONTENT_URI} to access the pet data.
-        getContentResolver().insert(PetEntry.CONTENT_URI, values);
+        Uri newUri = getContentResolver().insert(PetEntry.CONTENT_URI, values);
 
         Log.v("CatalogActivity", "Pet Saved");
     }

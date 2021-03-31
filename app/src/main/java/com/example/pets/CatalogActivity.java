@@ -73,14 +73,18 @@ public class CatalogActivity extends AppCompatActivity {
                 null,           //selection criteria
                 null);             //the sort order for the returned rows
 
-        //find the list view which will populated with pet data.
-        ListView petRecyclerView = findViewById(R.id.list);
+        // Find the ListView which will be populated with the pet data
+        ListView petListView = findViewById(R.id.list);
+
+        // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
+        View emptyView = findViewById(R.id.empty_view);
+        petListView.setEmptyView(emptyView);
 
         //set up an adapter to create a list item for each row of pet data in the cursor.
         PetCursorAdapter adapter = new PetCursorAdapter(this, cursor);
 
         //attach the adapter to list view.
-        petRecyclerView.setAdapter(adapter);
+        petListView.setAdapter(adapter);
     }
 
     private void insertPet() {

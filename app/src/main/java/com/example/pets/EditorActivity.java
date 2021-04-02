@@ -4,13 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
 import android.app.LoaderManager;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -25,7 +23,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.pets.data.PetContract.PetEntry;
-import com.example.pets.data.PetDbHelper;
 
 /**
  * Allows user to create a new pet or edit an existing one.
@@ -101,6 +98,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mWeightEditText = findViewById(R.id.edit_pet_weight);
         mGenderSpinner = findViewById(R.id.spinner_gender);
 
+        Log.v("EditorActivity", mCurrentPetUri.toString());
+
         setupSpinner();
     }
 
@@ -146,7 +145,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     /**
      * Get user input from editor and save new pet into database.
      */
-    private void insertPet() {
+    private void savePet() {
 
         String nameString = mNameEditText.getText().toString().trim();
         String breedString = mBreedEditText.getText().toString().trim();
@@ -178,6 +177,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         // Determine if this is a new or existing pet by checking if mCurrentPetUri is null or not
         if (mCurrentPetUri == null) {
+            Log.v("EditorActivitynull", mCurrentPetUri.toString());
             //Perform a query on the provider using content resolver.
             //use the {@link PetEntry#CONTENT_URI} to access the pet data.
             Uri newUri = getContentResolver().insert(PetEntry.CONTENT_URI, values);
@@ -198,6 +198,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
              * and pass the content values. Pass in null for the selection and selectionArgs
              * because mCurrentUri will already identify the correct row in the database that we want to modify.
              */
+            Log.v("EditorActivity", mCurrentPetUri.toString());
+
             int rowsUpdated = getContentResolver().update(mCurrentPetUri, values, null, null);
 
             if (rowsUpdated == 0) {
@@ -206,13 +208,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                         Toast.LENGTH_SHORT).show();
             } else {
                 // Otherwise, the insertion was successful and we can display a toast.
-                Toast.makeText(this, getString(R.string.editor_insert_pet_successful),
+                Toast.makeText(this, "pet updated",
                         Toast.LENGTH_SHORT).show();
             }
         }
-
-
-        Toast.makeText(this, "Pet saved", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -230,7 +229,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
                 //save pet to the database
-                insertPet();
+                savePet();
                 //Exit activity
                 finish();
                 return true;

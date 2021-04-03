@@ -33,8 +33,6 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
     private static final int PET_LOADER = 0;
 
-    private PetDbHelper mDbHelper;
-
     PetCursorAdapter mCursorAdapter;
 
     @Override
@@ -51,8 +49,6 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
                 startActivity(intent);
             }
         });
-
-        mDbHelper = new PetDbHelper(this);
 
         // Find the ListView which will be populated with the pet data
         ListView petListView = findViewById(R.id.list);
@@ -103,8 +99,6 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
         //Perform a query on the provider using content resolver.
         //use the {@link PetEntry#CONTENT_URI} to access the pet data.
         Uri newUri = getContentResolver().insert(PetEntry.CONTENT_URI, values);
-
-        Log.v("CatalogActivity", "Pet Saved");
     }
 
     @Override
@@ -165,14 +159,14 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
     private void showDeleteConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete all pets?");
-        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        builder.setTitle(getString(R.string.delete_all_pets_dialog_msg));
+        builder.setPositiveButton(getString(R.string.delete), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deleteAllPets();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (dialog != null) {

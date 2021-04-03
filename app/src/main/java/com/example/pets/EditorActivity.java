@@ -100,6 +100,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         if (mCurrentPetUri == null) {
             //this a new pet so change the app bar to say "Add a Pet"
             setTitle(getString(R.string.editor_activity_title_new_pet));
+
+            // Invalidate the options menu, so the "Delete" menu option can be hidden.
+            // (It doesn't make sense to delete a pet that hasn't been created yet.)
+            invalidateOptionsMenu();
         } else {
             //otherwise this is an existing pet, so change app bar to say "Edit a Pet"
             setTitle(getString(R.string.editor_activity_title_edit_pet));
@@ -280,6 +284,17 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        //If this is a new pet hide the delete menu item.
+        super.onPrepareOptionsMenu(menu);
+        if (mCurrentPetUri == null) {
+            MenuItem menuItem = menu.findItem(R.id.action_delete);
+            menuItem.setVisible(false);
+        }
+        return true;
     }
 
     @Override

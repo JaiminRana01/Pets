@@ -82,7 +82,12 @@
     <!--  Toast message in editor when current pet was successful deleted [CHAR LIMIT=NONE]  -->
     <string name="editor_delete_pet_successful">Pet deleted</string>
 
-
     <!--  Toast message in editor when current pet has failed to be deleted [CHAR LIMIT=NONE]  -->
     <string name="editor_delete_pet_failed">Error with deleting pet</string>
+
+    <!-- Toast message in editor when all pets was successfully deleted [CHAR LIMIT=NONE]   -->
+    <string name="catalog_delete_all_pets"> pets deleted from database</string>
+
+    <!--  Label for pet breed if the breed is unknown [CHAR LIMIT=20]  -->
+    <string name="unknown_breed">Unknown breed</string>
 </resources>

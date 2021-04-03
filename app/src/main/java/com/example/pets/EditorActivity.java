@@ -424,15 +424,15 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // Create an AlertDialog.Builder and set the message, and click listeners
         // for the positive and negative buttons on the dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete this pet?");
-        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        builder.setTitle(getString(R.string.delete_dialog_msg));
+        builder.setPositiveButton(getString(R.string.delete), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //delete pet.
                 deletePet();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //when user clicks on cancel button dismiss the dialog and continue editing.
